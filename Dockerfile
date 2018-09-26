@@ -15,7 +15,8 @@ RUN groupadd deloitte; \
 
 # Install PHP.
 RUN apt-get update && \
-    apt-get install -y curl git php7.2-cli php7.2-curl php7.2-zip unzip
+    apt-get install -y curl git php7.2-cli php7.2-curl php7.2-zip unzip; \
+    rm -rf /var/lib/apt/lists/*
 
 # Install composer.
 RUN set -ex; \
