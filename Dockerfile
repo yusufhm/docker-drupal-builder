@@ -9,10 +9,6 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.schema-version="1.0.0"
 
-# Add deloitte user & group.
-RUN groupadd deloitte; \
-    useradd -g deloitte -md /home/deloitte -s /bin/bash deloitte
-
 # Install PHP.
 RUN apt-get update; \
     apt-get install -y software-properties-common; \
@@ -29,8 +25,8 @@ RUN set -ex; \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
     rm composer-setup.php; \
     echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> /etc/profile; \
-    gosu deloitte bash -c 'composer global require hirak/prestissimo';
+    composer global require hirak/prestissimo
 
 # Install nvm.
 RUN set -ex; \
-    gosu deloitte bash -c 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash';
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
