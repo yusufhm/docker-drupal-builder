@@ -5,17 +5,22 @@ ARG VCS_REF
 ARG NODE_VERSION=8
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.vcs-url="https://bitbucket.org/yusufhm/reins" \
+      org.label-schema.vcs-url="https://github.com/DeloitteDigitalAPAC/docker-drupal-builder" \
       org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.schema-version="0.1.0"
+      org.label-schema.schema-version="1.0.0"
 
 # Add deloitte user & group.
 RUN groupadd deloitte; \
     useradd -g deloitte -md /home/deloitte -s /bin/bash deloitte
 
 # Install PHP.
-RUN apt-get update && \
-    apt-get install -y curl git php7.2-cli php7.2-curl php7.2-zip unzip; \
+RUN apt-get update; \
+    apt-get install -y software-properties-common; \
+    add-apt-repository ppa:ondrej/php; \
+    apt-get update; \
+    apt-get install -y curl git \
+      php7.1-bz2 php7.1-cli php7.1-curl php7.1-dom php7.1-mbstring php7.1-zip \
+      unzip; \
     rm -rf /var/lib/apt/lists/*
 
 # Install composer.

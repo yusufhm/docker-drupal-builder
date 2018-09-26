@@ -7,7 +7,14 @@ jobs:
      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
      - run: |
-        docker build -t deloittedigitalapac/drupal-builder -t deloittedigitalapac/drupal-builder:latest .
-        docker build --build-arg NODE_VERSION=8.11 -t deloittedigitalapac/drupal-builder:node-8.11 .
+        docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+                     --build-arg VCS_REF=`git rev-parse --short HEAD` \
+                     -t deloittedigitalapac/drupal-builder \
+                     -t deloittedigitalapac/drupal-builder:latest .
+
+        docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+                     --build-arg VCS_REF=`git rev-parse --short HEAD` \
+                     --build-arg NODE_VERSION=8.11 \
+                     -t deloittedigitalapac/drupal-builder:node-8.11 .
 
      - run: docker push deloittedigitalapac/drupal-builder
