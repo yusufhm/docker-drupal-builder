@@ -34,3 +34,11 @@ RUN set -ex; \
 # Install nvm.
 RUN set -ex; \
     gosu deloitte bash -c 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash';
+
+COPY deloitte-entrypoint.sh /usr/local/bin/
+
+# Run our entrypoint, from which we call mariadb's.
+ENTRYPOINT ["/usr/local/bin/deloitte-entrypoint.sh"]
+
+EXPOSE 3306
+CMD ["mysqld"]
