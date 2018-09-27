@@ -33,7 +33,11 @@ RUN set -ex; \
 
 # Install nvm.
 RUN set -ex; \
-    gosu deloitte bash -c 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash';
+    gosu deloitte bash -c 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash'; \
+    echo 'export NVM_DIR="$HOME/.nvm"\n\
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n\
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"\n'\
+>> /home/deloitte/.profile;
 
 COPY deloitte-entrypoint.sh /usr/local/bin/
 
