@@ -39,6 +39,3 @@ COPY deloitte-entrypoint.sh /usr/local/bin/
 
 # Run our entrypoint, from which we call mariadb's.
 ENTRYPOINT ["/usr/local/bin/deloitte-entrypoint.sh"]
-
-EXPOSE 3306
-CMD ["mysqld"]
