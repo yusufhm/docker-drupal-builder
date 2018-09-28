@@ -13,12 +13,16 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 RUN groupadd deloitte; \
     useradd -g deloitte -md /home/deloitte -s /bin/bash deloitte
 
-# Install PHP.
-RUN apt-get update; \
-    apt-get install -y software-properties-common; \
-    add-apt-repository ppa:ondrej/php; \
+# Install PHP & chrome.
+RUN set -ex; \
     apt-get update; \
-    apt-get install -y curl git \
+    apt-get install -y software-properties-common; \
+    apt-get install -y curl; \
+    add-apt-repository ppa:ondrej/php; \
+    curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -; \
+    add-apt-repository "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"; \
+    apt-get update; \
+    apt-get install -y git google-chrome-stable \
       php7.1-bz2 php7.1-cli php7.1-curl php7.1-dom php7.1-gd php7.1-mbstring php7.1-mysql php7.1-zip \
       unzip; \
     rm -rf /var/lib/apt/lists/*
@@ -38,12 +42,6 @@ RUN set -ex; \
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n\
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"\n'\
 >> /home/deloitte/.profile;
-
-# Install chrome.
-RUN set -ex; \
-    curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -; \
-    add-apt-repository "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"; \
-    apt-get update && apt-get install -y google-chrome-stable;
 
 COPY deloitte-entrypoint.sh /usr/local/bin/
 
