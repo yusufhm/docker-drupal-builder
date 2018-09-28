@@ -36,7 +36,7 @@ RUN set -ex; \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
     rm composer-setup.php; \
     echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> /etc/profile; \
-    gosu deloitte bash -c 'composer global require hirak/prestissimo';
+    gosu deloitte bash -c 'composer global require hirak/prestissimo && composer clear-cache';
 
 # Install nvm.
 RUN set -ex; \
