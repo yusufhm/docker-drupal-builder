@@ -43,7 +43,7 @@ RUN set -ex; \
 RUN set -ex; \
     curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -; \
     add-apt-repository "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"; \
-    apt-get install -y google-chrome-stable;
+    apt-get update && apt-get install -y google-chrome-stable;
 
 COPY deloitte-entrypoint.sh /usr/local/bin/
 
