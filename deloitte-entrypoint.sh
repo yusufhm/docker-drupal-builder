@@ -16,6 +16,7 @@ export MYSQL_ALLOW_EMPTY_PASSWORD=true;
 
 if [ ! -z "${DELOITTE_USER_ID}" ]
 then
+  export NVM_DIR=/home/deloitte/.nvm
   exec gosu ${DELOITTE_USER_ID} "$@"
 else
   exec "$@"
