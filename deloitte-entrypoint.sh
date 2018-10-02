@@ -14,4 +14,9 @@ fi
 export MYSQL_ALLOW_EMPTY_PASSWORD=true;
 /usr/local/bin/docker-entrypoint.sh mysqld &> /tmp/mysql.log &
 
-exec "$@"
+if [ ! -z "${DELOITTE_USER_ID}" ]
+then
+  exec gosu ${DELOITTE_USER_ID} "$@"
+else
+  exec "$@"
+fi
